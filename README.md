@@ -1,13 +1,13 @@
 <h2 align="center">
 Ecoleta - front-end web
 <br/>
+<br/>
 <img src="./src/assets/logo.svg">
 <br/>
 
 <br/>
 <div style="display:flex">
-<!-- <img src="assets_readme/video1.gif" width="400px">
-<img src="assets_readme/video2.gif" style="margin-left:3px"  width="400px"> -->
+<img src="./src/assets/ecoleta-web2.gif" width="100%">
 </div>
 <br/>
 
