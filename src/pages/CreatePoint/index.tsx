@@ -7,6 +7,7 @@ import axios from "axios";
 import api from "../../services/api";
 
 import Dropzone from "../../components/Dropzone";
+import ConfirmationModal from "../../components/ConfirmationModal";
 
 import "./styles.css";
 
@@ -29,6 +30,8 @@ const CreatePoint: React.FC = () => {
   const [items, setItems] = useState<Item[]>([]);
   const [ufs, setUfs] = useState<string[]>([]);
   const [cities, setCities] = useState<string[]>([]);
+
+  const [status, setStatus] = useState<boolean>(false);
 
   const [initialPosition, setInitialPosition] = useState<[number, number]>([
     0,
@@ -68,7 +71,7 @@ const CreatePoint: React.FC = () => {
   useEffect(() => {
     axios
       .get<IBGEUFResponse[]>(
-        "https://servicodados.ibge.gov.br/api/v1/localidades/estados"
+        "https://servicodados.ibge.gov.br/api/v1/localidades/estados?orderBy=nome"
       )
       .then((response) => {
         const ufInitials = response.data.map((uf) => uf.sigla);
@@ -118,7 +121,7 @@ const CreatePoint: React.FC = () => {
     }
   }
 
-  async function handleSubmit(event: FormEvent) {
+  function handleSubmit(event: FormEvent) {
     event.preventDefault();
 
     const { name, email, whatsapp } = formData;
@@ -142,11 +145,19 @@ const CreatePoint: React.FC = () => {
       data.append("image", selectedFile);
     }
 
-    await api.post("points", data);
-
-    alert("Ponto de coleta criado");
-
-    history.push("/");
+    api
+      .post("points", data)
+      .then(() => {
+        setStatus(true);
+        setTimeout(() => {
+          setStatus(false);
+          history.push("/");
+        }, 3000);
+      })
+      .catch((error) => {
+        setStatus(false);
+        console.log(error);
+      });
   }
 
   return (
@@ -279,6 +290,8 @@ const CreatePoint: React.FC = () => {
 
         <button type="submit">Cadastrar ponto de coleta</button>
       </form>
+
+      {status && <ConfirmationModal />}
     </div>
   );
 };
