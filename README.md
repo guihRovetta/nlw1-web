@@ -7,7 +7,7 @@ Ecoleta - front-end web
 
 <br/>
 <div style="display:flex">
-<img src="./src/assets/ecoleta-web2.gif" width="100%">
+<img src="./src/assets/ecoleta-web.gif" width="100%">
 </div>
 <br/>
 
